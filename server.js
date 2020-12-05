@@ -7,13 +7,13 @@ const multer = require('multer')
 const app = express()
 
 const PORT = process.env.PORT || 8000
-const upload = multer({ dest : 'uploads/' })
+const upload = multer({ dest: 'uploads/' })
 const URL = 'mongodb+srv://user:12345@cluster0.7pxt3.mongodb.net/imessage?retryWrites=true&w=majority'
 
-mongoose.connect(URL,{
-    useUnifiedTopology : true,
-    useNewUrlParser : true
-    
+mongoose.connect(URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+
 })
 
 app.use(express.json())
@@ -29,13 +29,15 @@ app.post('/create', async (req, res) => {
     const exp = new Experience(req.body)
     const sv = await exp.save()
     console.log(sv)
-    res.send({ status  : 'success' })
+    res.send({ status: 'success' })
 })
 
 app.post('/upload', upload.array('images'), async (req, res) => {
-    console.log(req.images)
-    console.log(req.fle)
-    res.send({ status  : 'success' })
+    let filenames = req.files.map(function (file) {
+        return file.filename; 
+    })
+    console.log(filenames)
+    res.send({ status: 'success' })
 })
 
 app.get('/get', async (req, res) => {
