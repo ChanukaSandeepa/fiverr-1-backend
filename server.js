@@ -7,7 +7,14 @@ const multer = require('multer')
 const app = express()
 
 const PORT = process.env.PORT || 8000
-const upload = multer({ dest: 'uploads/' })
+const upload = multer.diskStorage({
+    dest: 'uploads/',
+    filename: function (req, file, cb) {
+        console.log(file.originalname + '.jpg')
+        cb(null,file.originalname + '.jpg');
+    }
+
+})
 const URL = 'mongodb+srv://user:12345@cluster0.7pxt3.mongodb.net/imessage?retryWrites=true&w=majority'
 
 mongoose.connect(URL, {
@@ -34,7 +41,7 @@ app.post('/create', async (req, res) => {
 
 app.post('/upload', upload.array('images'), async (req, res) => {
     let filenames = req.files.map(function (file) {
-        return file.filename; 
+        return file.filename + '.jpg';
     })
     console.log(filenames)
     res.send({ status: 'success' })
