@@ -7,7 +7,7 @@ const multer = require('multer')
 const app = express()
 
 const PORT = process.env.PORT || 8000
-const upload = multer.diskStorage({
+const storage = multer.diskStorage({
     dest: 'uploads/',
     filename: function (req, file, cb) {
         console.log(file.originalname + '.jpg')
@@ -39,10 +39,22 @@ app.post('/create', async (req, res) => {
     res.send({ status: 'success' })
 })
 
-app.post('/upload', upload.array('images'), async (req, res) => {
-    let filenames = req.files.map(function (file) {
-        return file.filename + '.jpg';
-    })
+app.post('/upload', async (req, res) => {
+    let upload = multer({ storage: storage}).array('images');
+
+    upload(req, res, function(err) {
+        if (req.fileValidationError) {
+            return res.send(req.fileValidationError);
+        }
+        let filenames = req.files.map(function (file) {
+            return file.filename + '.jpg';
+        })
+        console.log(filenames)
+        res.send(filenames);
+    });
+
+
+    
     console.log(filenames)
     res.send({ status: 'success' })
 })
