@@ -20,6 +20,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
+    console.log("calling from heroku server")
     res.send('<h1>Hello Heroku</h1>')
 })
 
