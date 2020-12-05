@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(cors())
 
 app.get('/', (req, res) => {
-    res.send('Done')
+    res.send('<h1>Hello Heroku</h1>')
 })
 
 app.post('/create', async (req, res) => {
