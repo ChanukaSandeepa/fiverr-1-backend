@@ -33,7 +33,8 @@ app.post('/create', async (req, res) => {
 })
 
 app.post('/upload', upload.array('images'), async (req, res) => {
-    console.log(req.body)
+    console.log(req.images)
+    console.log(req.fle)
     res.send({ status  : 'success' })
 })
 
