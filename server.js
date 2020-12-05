@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 8000
 const storage = multer.diskStorage({
     dest: 'uploads/',
     filename: function (req, file, cb) {
-        console.log(file.originalname + '.jpg')
-        cb(null,file.originalname + '.jpg');
+        console.log(file.originalname + '.chaging')
+        cb(null,file.originalname);
     }
 
 })
@@ -47,16 +47,11 @@ app.post('/upload', async (req, res) => {
             return res.send(req.fileValidationError);
         }
         let filenames = req.files.map(function (file) {
-            return file.filename + '.jpg';
+            return file.filename + '.jpg - not from';
         })
         console.log(filenames)
         res.send(filenames);
     });
-
-
-    
-    console.log(filenames)
-    res.send({ status: 'success' })
 })
 
 app.get('/get', async (req, res) => {
