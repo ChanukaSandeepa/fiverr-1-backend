@@ -7,7 +7,7 @@ const multer = require('multer')
 const app = express()
 
 const PORT = process.env.PORT || 8000
-const upload = multer({ dest : '/uploads' })
+const upload = multer({ dest : 'uploads/' })
 const URL = 'mongodb+srv://user:12345@cluster0.7pxt3.mongodb.net/imessage?retryWrites=true&w=majority'
 
 mongoose.connect(URL,{
