@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const Experience = require('./models/Experience')
 const multer = require('multer')
+const bodyParser = require('body-parser')
+const formidable = require('express-formidable')
 
 const app = express()
 
@@ -10,7 +12,7 @@ const PORT = process.env.PORT || 8000
 const storage = multer.diskStorage({
     dest: 'uploads/',
     filename: function (req, file, cb) {
-        cb(null,file.originalname);
+        cb(null, file.originalname);
     }
 
 })
@@ -22,13 +24,24 @@ mongoose.connect(URL, {
 
 })
 
-app.use(express.json())
-app.use(express.urlencoded());
+// app.use(bodyParser.json())
+// app.use(express.urlencoded());
+// const bodyy = bodyParser.urlencoded({ extended: false })
+app.use(express.urlencoded({ extended: true }))
 app.use(cors())
+app.use(formidable({
+    encoding: 'utf-8',
+    uploadDir: './uploads',
+    multiples: true,
+}))
 
-app.get('/', (req, res) => {
-    console.log("calling from heroku server")
-    res.send('<h1>Hello Heroku</h1>')
+app.post('/test', (req, res) => {
+    console.log(req.fields)
+    console.log(req.files)
+    req.files.images.map(({name}) => {
+        console.log(name)
+    })
+    res.send('<h1>Hello Herokuuu</h1>')
 })
 
 app.post('/create', async (req, res) => {
@@ -40,19 +53,10 @@ app.post('/create', async (req, res) => {
 })
 
 app.post('/upload', async (req, res) => {
-    let upload = multer({ storage: storage}).array('images');
     console.log(req.body)
-    console.log(req.params)
-    upload(req, res, function(err) {
-        if (req.fileValidationError) {
-            return res.send(req.fileValidationError);
-        }
-        let filenames = req.files.map(function (file) {
-            return file.filename;
-        })
-        console.log(filenames)
-        res.send(filenames);
-    });
+    const images = req.files.images(({name}) => name)
+    console.log(images)
+    res.send('done')
 })
 
 app.get('/get', async (req, res) => {
