@@ -41,6 +41,7 @@ app.post('/create', async (req, res) => {
 app.post('/upload', async (req, res) => {
     let upload = multer({ storage: storage}).array('images');
     console.log(req.body)
+    console.log(req.params)
     upload(req, res, function(err) {
         if (req.fileValidationError) {
             return res.send(req.fileValidationError);
