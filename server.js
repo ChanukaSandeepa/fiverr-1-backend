@@ -53,8 +53,8 @@ app.post('/create', async (req, res) => {
 })
 
 app.post('/upload', async (req, res) => {
-    console.log(req.body)
-    const images = req.files.images.map(({name}) => name)
+    console.log(req.fields)
+    const images = req.fields.images.map(({name}) => name)
     console.log(images)
     res.send('done')
 })
