@@ -1,20 +1,18 @@
 {
-  "name": "fiverr-1.0",
+  "name": "index",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "node server.js"
+    "dev": "nodemon index.js",
+    "start": "node index.js"
   },
-  "author": "",
+  "author": "chanuka",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-formidable": "^1.2.0",
-    "mongoose": "^5.10.15",
-    "multer": "^1.4.2"
+    "mongoose": "^5.11.6"
   }
 }

@@ -18,8 +18,17 @@ const experienceSchema = new mongoose.Schema(
         rating: {
             type: Number
         },
-        duration: { type: String },
-        
+        duration: {
+            durationType : String,
+            duration : String
+        },
+        dates : {
+            startDate : Date,
+            endDate : Date
+        },
+        times : {
+            type : [],
+        },
         persons : {
             type : Number
         },
@@ -30,9 +39,11 @@ const experienceSchema = new mongoose.Schema(
             required: "Nome è un campo obbligatorio"
         },
         address: {
-            type: String,
-            trim: true,
-            required: "Indirizzo è un campo obbligatorio"
+            name : String,
+            location : {
+                lat : String,
+                lng : String,
+            }
         },
         phone: {
             type: String,
@@ -55,10 +66,16 @@ const experienceSchema = new mongoose.Schema(
         about: {
             type: String,
             trim: true
+        },
+        user : {
+            type : mongoose.Types.ObjectId,
+            ref : 'User'
         }
     },
     { timestamps: true }
 );
+
+
 
 const Experience = mongoose.model('Experience', experienceSchema)
 
